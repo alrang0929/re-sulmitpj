@@ -1,0 +1,8 @@
+[개발환경 셋팅 ver241116]
+
+
+- npm creat vite app 
+- npm run dev
+- CSS : styled-components
+- npm ci 로 한번에 진행 가능..
+- 슬라이드: swiper
