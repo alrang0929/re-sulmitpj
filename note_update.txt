@@ -1,0 +1,152 @@
+구현해야되는 기능: 
+
+240716
+0. 상세페이지 페이징 
+1. 서브메뉴 연결 
+2. 타이틀 데이터 연결 및 셋팅
+3. 장바구니 데이터 설계 
+4. 장바구니 디자인 셋팅 
+
+5. 서브페이지 디자인
+
+------------------------------------------------------------
+
+240710
+[intro 컴포넌트]
+1. 기존에 넣어둔 html에 등록된 스크롤 display none이 유지되어 다른 컴포넌트에도 영향을 줌
+    a) 상태변수로 변경하여 intro 화면 클릭시 "scbar-display-none" 클레스 제거를 함
+    a-1) 제이쿼리로 클레스 토글, 상태변수를 쓸까 했으나 html에 직접적으로 클래스를 줘야해서
+        제이쿼리로 진행
+      $("html").addClass("scbar-display-none");
+     $("#intro-area").click(()=>{
+      $("html").removeClass("scbar-display-none");
+    })
+
+
+
+[Member 컴포넌트(회원가입)]:
+>>요약
+1. 약관 체크버튼 추가
+2. submit 클릭시 뜨는 에러 분기
+
+1. 약관 체크버튼 추가
+2. submit(가입하기) 버튼 클릭시 error 상태일시 얼럿창 호출하도록 코드 추가
+    a) 추후 체크사항 에러, 필수 입력사항 에러 분기하여 에러메세지 구분기능 추가
+    a-1) if 문으로 분기했는데 !totalValid() <<가 다른 에러들도 포함하고 있어서
+        !chk 조건을 확인도 못함..
+
+         else if(!totalValid()) {
+          alert("회원가입을 위해 필수 정보를 입력해주세요 ");
+          return;
+        }
+        if (!chk) {
+            alert("약관에 동의해주세요");
+            return;
+        } 
+    a-2) switch문으로 변경
+            해석:
+                1. 순차적 검사를 위해 swith메서드에 true값을 넣음
+                    1) 메서드 값true를 각 case 문의 조건식과 비교
+                    2) 조건식이 true로 판명되면 case 문 실행
+                    3) 아닐시 return문으로 빠져나옴
+                2. totalValid() 로 필수정보 에러 분기를 설정했으나
+                totalValid()에 chkError도 포함되므로 케이스 구분을 위해 아래와 같이 작성..
+
+         switch(true){
+          case 
+          !userId ||
+          !userName ||
+          !pwd ||
+          !chkPwd ||
+          !email 
+          : alert("필수 정보를 입력해주세요");
+          return;
+          case !chk: alert("약관에 동의해주세요");
+          return;
+        }
+
+[Login 컴포넌트]
+1. id 정보가 매칭이 안됐었음.. find 비교때 vid 오타 ..ㅠ uid로 비교했어야!!!!
+2. 아이디 저장기능 추가
+3. 미뤄놨던 로그인 후 제작
+
+    a) 상태관리 추가 후 상태관리변수값에 따라 로컬스에서 데이터 삭제, 추가 + 체크박스 체크드 상태 변경
+    (1) 상태관리 변수 추가 
+    //[3] 아이디 저장 체크상태 변수
+    const [chkSaveId, setChkSaveId] = useState(false);
+
+    (2) 체크 박스에 상태변수값 전달
+
+        {/* 4. 아이디 저장 */}
+    <div className="saveId">
+    <input
+     onChange={(e) => {
+             setChkSaveId(e.target.checked);
+             // console.log("상태확인",setChkSaveId) }}
+
+    (3) 화면 랜더링 구역 추가 : [chkSaveId, userId])의존 상태변화에 따라 레지스토리에 아이디 추가, 삭제 토글
+            useEffect(() => {
+        if (chkSaveId) {
+            localStorage.setItem("savedUserId", userId);
+        } else {
+            localStorage.removeItem("savedUserId");
+        }
+    }, [chkSaveId, userId]);
+
+    (4) 의존성 없는 화면 랜더링 구역에 savedUserId 정의
+                
+        //로컬 스토리지에 저장된 아이디가 있다면 체크박스를 체크
+        //아이디 입력값을 설정
+
+        const savedUserId = localStorage.getItem("savedUserId");
+        if (savedUserId) {
+            setChkSaveId(true);
+            setUserId(savedUserId);
+        }
+
+    (5) 요걸 선택박스 checked로 전달
+        checked={chkSaveId}
+        
+    4. && 연상자를 사용하여 로그인 상태값에 따른 메뉴 변환
+
+    [Main 컴포넌트]
+    1. 추천상품 리스트 오토슬라이드 안되는 것 수정
+    
+
+240721
+    [detail 컴포넌트]
+    1. 뒤로가기 에러:
+    기존에 text() 메서드로 주소값을 전달 받아 이동하는 것을
+    replace()// useNavigate 훅의 replace 옵션//메서드로 처리
+    ㄴ> replace : 기본값: false, true 값으로 설정하면 새로운 항목으로 추가 , 교체
+    
+240723
+[ShopCustomCont 컴포넌트] 
+>>> OptionTable 컴포넌트
+
+1. sum => className 으로 변경    
+sum > id로 되어있었음, className 으로 변경 (대상 여럿)
+
+2. 기존 sum 잡는 방식을 아래로 변경 > tr 값을 기준으로 데이터 구분
+
+1. 각 옵션의 수량을 저장하는 참조변수 생성
+ const optRef = useRef([]);
+ (...)
+ 2. 선택된 input 부모값 중 tr 의 index 값을 가져옴 (:pseq)
+ let pseq = $(e.currentTarget).parents("tr").index();
+ ㄴ> pseq 선택된 tr 의 순번값
+(...)
+
+
+=>해석: 선택된 옵션수량[idx] = eq(pseq:선택된 값의 부모 tr 순번)의 값
+optRef.current[pseq] = Number(sum.eq(pseq).val());
+
+.......................................ㅎ......
+......ㅋ......ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ아 ..큐ㅠㅠㅠㅠㅠㅠㅠㅠ
+
+==> 님 옵션테이블 장바구니랑 동일하게 맞추셔야될듯. .ㅋ..ㅋ.ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ
+
+
+추후 ) ux 고려하여 테이블 순서 변경
+
+1. 제품명 / 2. 제품 가격 / 3. 수량 / 4. 제품가격*수량 / 삭제 (까묵음..ㅎ)
