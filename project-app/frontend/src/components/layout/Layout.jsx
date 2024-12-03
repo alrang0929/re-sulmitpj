@@ -4,7 +4,6 @@ import FooterArea from "./FooterArea";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { sCon } from "../pages/sCon";
 import { useNavigate } from "react-router-dom";
-import { RecoilRoot } from "recoil";
 import CartList from "../modules/CartList";
 ///////import area///////////////////////////////////
 

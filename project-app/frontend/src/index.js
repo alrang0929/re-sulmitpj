@@ -26,7 +26,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 /// 컴포넌트 출력 ///
 export default function MainComponent() {
-  const queryClient = new QueryClient();
+  const queryClient = new ReactQueryDevtools();
   //////////화면랜더링 구역///////////////////////////////////////////////////////////
   return (
     // 라우터 루트로 라우터 구성시작
