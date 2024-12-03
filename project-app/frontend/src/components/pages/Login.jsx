@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import $ from "jquery";
-import useAuthStore from "../../../store/authStore";
+import useCustomerStore from "../../../store/authStore";
 //css
 // import "../../css/login.scss";
 //로컬 스토리지 셋팅 함수 호출!
@@ -11,8 +11,8 @@ import useAuthStore from "../../../store/authStore";
 /////import area///////////////////////////////////////////////
 
 export default function Login() {
-// zustand useAuthStore 상태관리자 import
-const { userId, setUserId, pwd, setPwd } = useAuthStore();
+// zustand useCustomerStore 상태관리자 import
+const { userId, setUserId, pwd, setPwd } = useCustomerStore();
 
   ///화면 랜더링 구역///////////////////////////////////
   useEffect(() => {
