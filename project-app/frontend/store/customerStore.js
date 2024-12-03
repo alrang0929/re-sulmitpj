@@ -1,12 +1,11 @@
 import { create } from "zustand";
 import bcrypt from "bcryptjs";
-import errorMessages from "../../backend/log/errorMessages";
 
 // create() : 상태와 상태 변경 로직을 정의하는 객체를 반환
 // set(): zustand 스토어 상태를 변경
 
 // 1. useAuthStore함수에 create()매서드로 상태변환 로직 정의
-const useAuthStore = create((set) => ({
+const useGetCustomerData = create((set) => ({
   userId: "",
   setUserId: (userId) => set({ userId }),
   pwd: "",
@@ -30,4 +29,4 @@ const getErroMsg = create(() => ({
   setErrorMessage: (msg) => set({ errorMessage: msg }),
 }));
 
-export default useAuthStore;
+export default useGetCustomerData;

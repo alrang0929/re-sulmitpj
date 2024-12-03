@@ -1,12 +1,5 @@
 // 슬밋pj -  로그인 페이지///
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import $ from "jquery";
-import useCusto from "../../../store/authStore";
-//css
-// import "../../css/login.scss";
-//로컬 스토리지 셋팅 함수 호출!
-// import { initData } from "../func/memFn";
+
 
 /////import area///////////////////////////////////////////////
 

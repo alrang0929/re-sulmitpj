@@ -9,8 +9,8 @@ const useGetErrorMsg = create((set) => ({
     setErrorMsg: (msgKey) => {
 
       // 전달받은 props로 메세지 저장소에서 조회 or 예외에러메세지
-      const resloveMsg = errorMsg[msgKey] || exceptionMsg;
-      set({errorMsg: resloveMsg}); //상태 업데이트
+      const resloveMsg = errorMessages[msgKey] || exceptionMsg;
+      set({errorMessages: resloveMsg}); //상태 업데이트
     },
 
 
